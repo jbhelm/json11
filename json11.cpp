@@ -776,7 +776,8 @@ bool Json::has_shape(const shape & types, string & err) const {
     }
 
     for (auto & item : types) {
-        if ((*this)[item.first].type() != item.second) {
+        const auto& value = (*this)[item.first];
+        if (value.type() != item.second || &value == &static_null()) {
             err = "bad type for " + item.first + " in " + dump();
             return false;
         }
